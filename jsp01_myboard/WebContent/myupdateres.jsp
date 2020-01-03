@@ -18,23 +18,24 @@
 <body>
 
 	<%
-		String myname = request.getParameter("myname");
+		int myno = Integer.parseInt(request.getParameter("myno"));
 		String mytitle = request.getParameter("mytitle");
 		String mycontent = request.getParameter("mycontent");
 
 		MyDto dto = new MyDto();
-		dto.setMyname(myname);
+		dto.setMyno(myno);
 		dto.setMytitle(mytitle);
 		dto.setMycontent(mycontent);
 
 		MyDao dao = new MyDao();
 
-		int res = dao.insert(dto);
+		int res = dao.update(dto);
 		if (res > 0) {
 	%>
 	<script type="text/javascript">
 		alert("글 수정 성공");
-		location.href = 'mylist.jsp';
+		location.href = "mydetail.jsp?myno=<%=dto.getMyno()%>";
+		
 	</script>
 
 	<%
@@ -42,7 +43,7 @@
 	%>
 	<script type="text/javascript">
 		alert("글 수정 실패");
-		location.href = "myinsert.jsp";
+		location.href = "mylist.jsp";
 	</script>
 	<%
 		}

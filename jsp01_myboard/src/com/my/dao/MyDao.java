@@ -247,13 +247,12 @@ public class MyDao {
 		// 3. Query 준비
 		PreparedStatement pstm = null;
 		int res = 0;
-		String sql = "UPDATE MYBOARD SET ("+dto.getMyno()+",?,?,?,SYSDATE)";
+		String sql = " UPDATE MYBOARD SET MYTITLE = ?,MYCONTENT = ? WHERE MYNO =" +dto.getMyno();
 
 		try {
 			pstm = con.prepareStatement(sql);
-			pstm.setString(1, dto.getMyname());
-			pstm.setString(2, dto.getMytitle());
-			pstm.setString(3, dto.getMycontent());
+			pstm.setString(1, dto.getMytitle());
+			pstm.setString(2, dto.getMycontent());
 			System.out.println("3.Query 준비 : " + sql);
 
 			// 4. 실행 및 리턴

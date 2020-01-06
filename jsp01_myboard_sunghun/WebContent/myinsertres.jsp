@@ -18,11 +18,11 @@
 <body>
 
 	<%
-		String myname = request.getParameter("myname");
+		String member_id = request.getParameter("member_id");
 		String mytitle = request.getParameter("mytitle");
 		String mycontent = request.getParameter("mycontent");
 		MyDto dto = new MyDto();
-		dto.setMyname(myname);
+		dto.setMyname(member_id);
 		dto.setMytitle(mytitle);
 		dto.setMycontent(mycontent);
 		MyDao dao = new MyDao();
@@ -31,7 +31,7 @@
 	%>
 	<script type="text/javascript">
 		alert("글 작성 성공");
-		location.href = 'mylist.jsp';
+		location.href = 'mylist.jsp?member_id=<%=member_id%>';
 	</script>
 
 	<%
@@ -39,7 +39,7 @@
 	%>
 	<script type="text/javascript">
 		alert("글 작성 실패");
-		location.href = "myinsert.jsp";
+		location.href = "myinsert.jsp?member_id=<%=member_id%>";
 	</script>
 	<%
 		}

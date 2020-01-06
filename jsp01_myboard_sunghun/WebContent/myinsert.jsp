@@ -14,13 +14,16 @@
 <title>Insert title here</title>
 </head>
 <body>
+<%
+String member_id = request.getParameter("member_id");
+%>
 
 	<h1>글쓰기</h1>
-	<form action="myinsertres.jsp" method="post">
+	<form action="myinsertres.jsp?member_id=<%=member_id%>" method="post">
 		<table border="1">
 			<tr>
 				<th>이름</th>
-				<td><input type="text" name="myname"></td>
+				<td><%=member_id%></td>
 			</tr>
 			<tr>
 				<th>제목</th>
@@ -33,7 +36,7 @@
 			<tr>
 				<td colspan="2">
 				<input type="submit" value="작성"> 
-				<input type="button" value="취소" onclick="location.href='mylist.jsp'">
+				<input type="button" value="취소" onclick="location.href='mylist.jsp?member_id=<%=member_id%>'">
 				</td>
 			</tr>
 		</table>

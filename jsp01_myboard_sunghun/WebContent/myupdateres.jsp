@@ -18,6 +18,7 @@
 <body>
 
 	<%
+		String member_id = request.getParameter("member_id");
 		int myno = Integer.parseInt(request.getParameter("myno"));
 		String mytitle = request.getParameter("mytitle");
 		String mycontent = request.getParameter("mycontent");
@@ -31,8 +32,7 @@
 	%>
 	<script type="text/javascript">
 		alert("글 수정 성공");
-		location.href = "mydetail.jsp?myno=<%=dto.getMyno()%>";
-		
+		location.href = "mydetail.jsp?myno=<%=dto.getMyno()%>&member_id=<%=member_id%>";
 	</script>
 
 	<%
@@ -40,7 +40,7 @@
 	%>
 	<script type="text/javascript">
 		alert("글 수정 실패");
-		location.href = "mylist.jsp";
+		location.href = "mylist.jsp?member_id=<%=member_id%>";
 	</script>
 	<%
 		}

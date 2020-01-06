@@ -18,13 +18,26 @@
 <body>
 
 	<%
+		String member_id = request.getParameter("member_id");
 		int myno = Integer.parseInt(request.getParameter("myno"));
 		MyDao dao = new MyDao();
 		MyDto dto = new MyDto();
 		dto = dao.selectOne(myno);
+		if((member_id).compareTo(dto.getMyname())!=0){
+			%>
+			<script type="text/javascript">
+			alert("권한없음");
+			location.href='mydetail.jsp?member_id=<%=member_id%>&myno=<%=myno%>';
+			
+			</script>
+			
+			<%
+		}
+		
+		
 	%>
 	<h1>수정</h1>
-	<form action="myupdateres.jsp" method="post">
+	<form action="myupdateres.jsp?member_id=<%=member_id%>" method="post">
 	<input type="text" name="myno" style="display: none" value="<%=dto.getMyno()%>">
 		<table border="1">
 			<tr>
@@ -41,8 +54,8 @@
 			</tr>
 			<tr>
 				<td colspan="2">
-				<input type="submit" value="수정" onclick="location.href='myupdateres.jsp'"> 
-				<input type="button" value="취소" onclick="location.href='mylist.jsp'">
+				<input type="submit" value="수정" onclick="location.href='myupdateres.jsp?member_id=<%=member_id%>'"> 
+				<input type="button" value="취소" onclick="location.href='mylist.jsp?member_id=<%=member_id%>'">
 				</td>
 			</tr>
 		</table>

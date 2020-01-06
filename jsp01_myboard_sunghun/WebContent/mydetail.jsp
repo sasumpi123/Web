@@ -19,6 +19,7 @@
 
 
 	<%
+		String member_id = request.getParameter("member_id");
 		int myno = Integer.parseInt(request.getParameter("myno"));
 		MyDao dao = new MyDao();
 		MyDto dto = dao.selectOne(myno);
@@ -43,9 +44,9 @@
 		<tr>
 			
 			<td colspan="1">
-			<input type="button" value="수정" onclick="location.href='myupdate.jsp?myno=<%=dto.getMyno()%>'">
-			<input type="button" value="삭제" onclick="location.href='mydelete.jsp?myno=<%=dto.getMyno()%>'">
-			<input type="button" value="목록" onclick="location.href='mylist.jsp'">
+			<input type="button" value="수정" onclick="location.href='myupdate.jsp?myno=<%=dto.getMyno()%>&member_id=<%=member_id%>'">
+			<input type="button" value="삭제" onclick="location.href='mydelete.jsp?myno=<%=dto.getMyno()%>&member_id=<%=member_id%>'">
+			<input type="button" value="목록" onclick="location.href='mylist.jsp?member_id=<%=member_id%>'">
 			</td>
 		</tr>
 	</table>

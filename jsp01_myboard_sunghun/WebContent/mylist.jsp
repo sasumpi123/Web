@@ -23,9 +23,11 @@
 	<%
 		MyDao dao = new MyDao();
 		List<MyDto> list = dao.selectList();
+		String member_id = request.getParameter("member_id");
 	%>
 
 	<h1>List</h1>
+	<div>내 아이디 : <%=member_id %></div>
 
 	<table border="1">
 		<col width="50">
@@ -47,7 +49,7 @@
 		<tr>
 			<td><%= list.get(i).getMyno() %></td>
 			<td><%= list.get(i).getMyname() %></td>
-			<td><a href="mydetail.jsp?myno=<%=list.get(i).getMyno()%>"><%= list.get(i).getMytitle() %></a></td>
+			<td><a href="mydetail.jsp?myno=<%=list.get(i).getMyno()%>&member_id=<%=member_id%>"><%= list.get(i).getMytitle() %></a></td>
 			<td>
 				<%=list.get(i).getMydate() %>
 			</td>
@@ -58,10 +60,10 @@
 		%>
 
 		<tr>
-			<td colspan="4" align="right"><input type="button" onclick="location.href = 'myinsert.jsp'"
+			<td colspan="4" align="right"><input type="button" onclick="location.href = 'myinsert.jsp?member_id=<%=member_id %>'"
 				value="글쓰기">
 		</tr>
 	</table>
-	<button onclick="location.href='login.jsp'">로그인</button>
+	<button onclick="location.href='login.jsp'">로그아웃</button>
 </body>
 </html>

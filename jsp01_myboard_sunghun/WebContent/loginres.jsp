@@ -29,7 +29,7 @@
 	%>
 	<script type="text/javascript">
 		alert("로그인에 성공하였습니다");
-		location.href = "mylist.jsp";
+		location.href = 'mylist.jsp?member_id=<%=member_id%>';
 	</script>
 	<%
 		} else {

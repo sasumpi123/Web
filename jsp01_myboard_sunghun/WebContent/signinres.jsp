@@ -19,13 +19,14 @@
 
 	
 	<%
-		String member_id = request.getParameter("member_id");
+		String member_id = request.getParameter("member_id");				
 		String member_password = request.getParameter("member_password");
 		MemberDto dto = new MemberDto();
 		MemberDao dao = new MemberDao();
 		dto.setMember_id(member_id);
 		dto.setMember_password(member_password);
-
+		// member_id, member_password 받아와 dto에 저장하고
+		// dao.signIn함수를 통해 결과확인
 		if (dao.signIn(dto) > 0) {
 	%>
 	<script type="text/javascript">

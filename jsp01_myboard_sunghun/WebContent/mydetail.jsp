@@ -15,14 +15,24 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <body>
 
 
 	<%
-		String member_id = request.getParameter("member_id");
-		int myno = Integer.parseInt(request.getParameter("myno"));
+		String id = (String) session.getAttribute("id"); // 세션의 id값을 받아와 저장
+		int myno = Integer.parseInt(request.getParameter("myno")); // 글 번호 값을 받아와 저장
 		MyDao dao = new MyDao();
-		MyDto dto = dao.selectOne(myno);
+		MyDto dto = dao.selectOne(myno); // 해당 번호에 맞는 글 데이터를 가져옴
+		if ((id).compareTo(dto.getMyname()) != 0) {
+	%>
+	<script type="text/javascript">
+		$(function(){
+			$(".check").css("display","none");
+		})
+	</script>
+	<%
+	}
 	%>
 
 	<h1>Detail</h1>
@@ -42,16 +52,17 @@
 			</textarea></td>
 		</tr>
 		<tr>
-			
+
 			<td colspan="1">
-			<input type="button" value="수정" onclick="location.href='myupdate.jsp?myno=<%=dto.getMyno()%>&member_id=<%=member_id%>'">
-			<input type="button" value="삭제" onclick="location.href='mydelete.jsp?myno=<%=dto.getMyno()%>&member_id=<%=member_id%>'">
-			<input type="button" value="목록" onclick="location.href='mylist.jsp?member_id=<%=member_id%>'">
+			<input type="button" value="수정" onclick="location.href='myupdate.jsp?myno=<%=dto.getMyno()%>'" class="check">
+			<input type="button" value="삭제" onclick="location.href='mydelete.jsp?myno=<%=dto.getMyno()%>'" class="check">
+			<input type="button" value="목록" onclick="location.href='mylist.jsp'">
+			<input type="button" value="답글달기" onclick="location.href='reply.jsp?myno=<%=dto.getMyno()%>'">
 			</td>
 		</tr>
 	</table>
-	
-	
+
+
 
 
 </body>

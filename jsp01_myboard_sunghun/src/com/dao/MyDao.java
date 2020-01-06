@@ -11,7 +11,6 @@ import java.util.List;
 import com.db.JDBCTemplate;
 import com.dto.MyDto;
 
-
 // ojdbc6.jar - webcontent - web-inf - lib 안에
 public class MyDao extends JDBCTemplate {
 

@@ -23,7 +23,7 @@
 
 	
 <h1>로그인</h1>
-	<form action="loginres.jsp" method="post">
+	<form action="loginres.jsp" method="post">		<!-- loginres페이지로 member_id, member_password 값을 넘김 -->
 		<table border="1">
 			<tr>
 				<th>아이디</th>
@@ -36,7 +36,7 @@
 			<tr>
 				<td colspan="2">
 				<input type="submit" value="로그인"> 
-				<input type="button" value="회원가입" onclick="location.href='signin.jsp'">
+				<input type="button" value="회원가입" onclick="location.href='signin.jsp'">		<!--   회원가입 페이지로 이동  -->
 				</td>
 			</tr>
 		</table>

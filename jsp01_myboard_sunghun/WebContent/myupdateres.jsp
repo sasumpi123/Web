@@ -1,3 +1,4 @@
+<%@page import="javax.websocket.Session"%>
 <%@page import="com.dao.MyDao"%>
 <%@page import="com.dto.MyDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -18,7 +19,7 @@
 <body>
 
 	<%
-		String member_id = request.getParameter("member_id");
+		String id = (String)session.getAttribute("id");
 		int myno = Integer.parseInt(request.getParameter("myno"));
 		String mytitle = request.getParameter("mytitle");
 		String mycontent = request.getParameter("mycontent");
@@ -32,7 +33,7 @@
 	%>
 	<script type="text/javascript">
 		alert("글 수정 성공");
-		location.href = "mydetail.jsp?myno=<%=dto.getMyno()%>&member_id=<%=member_id%>";
+		location.href = "mydetail.jsp?myno=<%=dto.getMyno()%>";
 	</script>
 
 	<%
@@ -40,7 +41,7 @@
 	%>
 	<script type="text/javascript">
 		alert("글 수정 실패");
-		location.href = "mylist.jsp?member_id=<%=member_id%>";
+		location.href = "mylist.jsp";
 	</script>
 	<%
 		}

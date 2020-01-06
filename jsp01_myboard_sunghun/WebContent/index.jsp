@@ -11,7 +11,7 @@
 </head>
 <body>
 <script type="text/javascript">
-location.href="login.jsp";
+location.href="login.jsp";					// 진입후 로그인페이지로 이동
 </script>
 
 </body>

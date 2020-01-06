@@ -18,20 +18,21 @@
 <body>
 
 	<%
-		String member_id = request.getParameter("member_id");
-		String mytitle = request.getParameter("mytitle");
-		String mycontent = request.getParameter("mycontent");
-		MyDto dto = new MyDto();
-		dto.setMyname(member_id);
+		String id = (String) session.getAttribute("id");		// 세션에서 id 받아와 저장
+		String mytitle = request.getParameter("mytitle"); 		// 이전 페이지에서 제목 받아와 저장
+		String mycontent = request.getParameter("mycontent");	// 이전 페이지에서 내용 받아와 저장
+		MyDto dto = new MyDto();								// MyDto 선언
+		dto.setMyname(id);										
 		dto.setMytitle(mytitle);
-		dto.setMycontent(mycontent);
-		MyDao dao = new MyDao();
-		int res = dao.insert(dto);
+		dto.setMycontent(mycontent);							
+																// 값들 설정해줌
+		MyDao dao = new MyDao();								// MyDao 선언
+		int res = dao.insert(dto);								// 결과 받아옴
 		if (res > 0) {
 	%>
 	<script type="text/javascript">
 		alert("글 작성 성공");
-		location.href = 'mylist.jsp?member_id=<%=member_id%>';
+		location.href = 'mylist.jsp';
 	</script>
 
 	<%
@@ -39,7 +40,7 @@
 	%>
 	<script type="text/javascript">
 		alert("글 작성 실패");
-		location.href = "myinsert.jsp?member_id=<%=member_id%>";
+		location.href = "myinsert.jsp";
 	</script>
 	<%
 		}

@@ -14,16 +14,16 @@
 <title>Insert title here</title>
 </head>
 <body>
-<%
-String member_id = request.getParameter("member_id");
-%>
+	<%
+		String id = (String) session.getAttribute("id");	// 세션에서 id 값을 받아와 사용
+	%>
 
 	<h1>글쓰기</h1>
-	<form action="myinsertres.jsp?member_id=<%=member_id%>" method="post">
+	<form action="myinsertres.jsp" method="post">
 		<table border="1">
 			<tr>
 				<th>이름</th>
-				<td><%=member_id%></td>
+				<td><%=id%></td>
 			</tr>
 			<tr>
 				<th>제목</th>
@@ -34,9 +34,9 @@ String member_id = request.getParameter("member_id");
 				<td><textarea rows="6" cols="60" name="mycontent"></textarea></td>
 			</tr>
 			<tr>
-				<td colspan="2">
-				<input type="submit" value="작성"> 
-				<input type="button" value="취소" onclick="location.href='mylist.jsp?member_id=<%=member_id%>'">
+				<td colspan="2"><input type="submit" value="작성"> <input
+					type="button" value="취소"
+					onclick="location.href='mylist.jsp'">
 				</td>
 			</tr>
 		</table>

@@ -18,16 +18,31 @@
 <body>
 
 	<%
-		String member_id = request.getParameter("member_id");
-		int myno = Integer.parseInt(request.getParameter("myno"));
+		String id = (String) session.getAttribute("id"); // 세션에서 id값 받아옴
+		int myno = Integer.parseInt(request.getParameter("myno")); // 번호값 받아옴
 		MyDao dao = new MyDao();
+		MyDto dto = new MyDto();
+		dto = dao.selectOne(myno);
+		if ((id).compareTo(dto.getMyname()) != 0) { // 현재 접속해있는 아이디와 작성된 글의 작성자 아이디가 일치하지 않다면
+													// 글 삭제 권한 없음
+	%>
+	<script type="text/javascript">
+			alert("권한없음");
+			location.href='mydetail.jsp?myno=<%=myno%>';
+			
+			</script>
+	<%
+		} else {
+	%>
 
+
+	<%
 		int res = dao.delete(myno);
-		if (res > 0) {
+			if (res > 0) {
 	%>
 	<script type="text/javascript">
 		alert("글 삭제 성공");
-		location.href = 'mylist.jsp?member_id=<%=member_id%>';
+		location.href = 'mylist.jsp';
 	</script>
 
 	<%
@@ -35,10 +50,14 @@
 	%>
 	<script type="text/javascript">
 		alert("글 삭제 실패");
-		location.href = "mydetail.jsp?myno<%=myno%>,member_id=<%=member_id%>";
+		location.href = 'mydetail.jsp?myno<%=myno%>';
 	</script>
 	<%
 		}
+		}
 	%>
+
+
+
 </body>
 </html>

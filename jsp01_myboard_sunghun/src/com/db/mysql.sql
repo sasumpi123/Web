@@ -4,6 +4,7 @@ MEMBER_NUM NUMBER NOT NULL,
 MEMBER_ID VARCHAR2(100) PRIMARY KEY,
 MEMBER_PASSWORD VARCHAR2(100) NOT NULL
 )
+
 CREATE sequence memberseq;
 
 insert into MEMBER VALUES(MEMBERSEQ.NEXTVAL, '1234','1234');
@@ -11,6 +12,7 @@ insert into MEMBER VALUES(MEMBERSEQ.NEXTVAL, '1234','1234');
 SELECT * from member;
 
 
+drop table myboard;
 create table myboard(
 	MYNO NUMBER PRIMARY KEY,
 	MYNAME VARCHAR2(1000) NOT NULL,
@@ -21,3 +23,6 @@ create table myboard(
 CREATE sequence myseq;
 
 
+SELECT * 
+FROM (SELECT ROWNUM as row_num, myboard.* FROM MYBOARD)
+WHERE row_num <= 20 AND row_num>10;

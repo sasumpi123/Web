@@ -51,6 +51,49 @@ public class MyDao extends JDBCTemplate {
 
 		return list;
 	}
+	
+	public List<MyDto> paging(int startNum, int endNum) {
+
+		Connection con = getConnection();
+		// 3. Query 준비
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		String sql = "SELECT * FROM (SELECT ROWNUM as row_num, myboard.* FROM MYBOARD)" + 
+				"WHERE row_num>=? AND row_num <= ?";
+		List<MyDto> list = new ArrayList<MyDto>();
+
+		try {
+			pstm = con.prepareStatement(sql);
+			System.out.println("3. Query 준비");
+
+			pstm.setInt(1, startNum);
+			pstm.setInt(2, endNum);
+			rs = pstm.executeQuery();
+			while (rs.next()) {
+				MyDto dto = new MyDto();
+				dto.setBoard_number(rs.getInt(2));
+				dto.setBoard_writer(rs.getString(3));
+				dto.setBoard_title(rs.getString(4));
+				dto.setBoard_content(rs.getString(5));
+				dto.setBoard_date(rs.getDate(6));
+				
+				list.add(dto);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("[ERROR] : 3, 4");
+		} finally {
+			close(rs);
+			close(pstm);
+			close(con);
+		}
+
+		return list;
+	}
+
+
 
 	public MyDto selectOne(String board_number) {
 		Connection con = getConnection();

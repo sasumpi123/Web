@@ -10,9 +10,11 @@
 <title>Insert title here</title>
 </head>
 <body>
+<%
+int Page = Integer.parseInt(request.getParameter("Page"));
+%>
 <script type="text/javascript">
-
-location.href="paginglist.jsp?Page=1"
+location.href = "paginglist.jsp?Page=<%=Page%>";
 </script>
 
 </body>

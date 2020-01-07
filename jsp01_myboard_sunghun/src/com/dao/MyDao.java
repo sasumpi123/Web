@@ -158,39 +158,66 @@ public class MyDao extends JDBCTemplate {
 
 		// 3. Query 준비
 		Statement stmt = null;
-		ResultSet rs = null;
+		int res = 0;
 
 		String sql = " DELETE FROM MYBOARD WHERE MYNO = " + myno;
-		MyDto dto = new MyDto();
 
 		try {
 
 			System.out.println("3.Query 준비 : " + sql);
-
-			// 4. 실행 및 리턴
 			stmt = con.createStatement();
-			rs = stmt.executeQuery(sql);
-
-			while (rs.next()) {
-				dto.setMyno(rs.getInt(1));
-				dto.setMyname(rs.getString("MYNAME"));
-				dto.setMytitle(rs.getString(3));
-				dto.setMycontent(rs.getString(4));
-				dto.setMydate(rs.getDate(5));
+			res = stmt.executeUpdate(sql);
+			// 4. 실행 및 리턴
+			if (res > 0) {
+				System.out.println("삭제 성공");
+			} else {
+				System.out.println("삭제 실패");
 			}
-
-			System.out.println("실행 및 리턴");
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			close(rs);
 			close(stmt);
 			close(con);
 		}
 
-		return myno;
+		return res;
+	}
+
+	public int[] selectDelete(String[] no) {
+
+		Connection con = getConnection();
+
+		// 3. Query 준비
+		PreparedStatement pstm = null;
+
+		int[] cnt = null;
+
+		String sql = " DELETE FROM MYBOARD WHERE MYNO = ?";
+		try {
+
+			System.out.println("3.Query 준비 : " + sql);
+			pstm = con.prepareStatement(sql);
+
+			System.out.println(no);
+			for (int i = 0; i < no.length; i++) {
+				pstm.setString(1, no[i]);
+				pstm.addBatch();// 메모리에 적재 후, executeBatch()메소드가 호출될 때 한번에 실행
+
+			}
+			cnt = pstm.executeBatch(); // 메모리에 있던 query(addBatch())를 한번에 실행, int[]로 리턴
+			// 리턴되는 방식 : [-2,-2,-3,-2,...]
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstm);
+			close(con);
+		}
+
+		return cnt;
 	}
 
 }

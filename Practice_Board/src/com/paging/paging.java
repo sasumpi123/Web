@@ -5,14 +5,14 @@ public class paging {
 	private int endPage;
 	private int totalPage;
 	private int Page;
-	private int nowPage=1;
+	private int nowPage;
 	private boolean next;
-	private boolean before;
+	private boolean prev;
 	private int rowPage = 10;
 	private int colPage = 10;
 
 	public paging() {
-		Page = (nowPage/rowPage)+1;
+		//Page = (nowPage/rowPage)+1;
 		startPage = ((Page/colPage)*10)+1;
 		endPage = startPage + colPage - 1;
 	}
@@ -57,12 +57,12 @@ public class paging {
 		this.next = next;
 	}
 
-	public boolean isBefore() {
-		return before;
+	public boolean isPrev() {
+		return prev;
 	}
 
-	public void setBefore(boolean before) {
-		this.before = before;
+	public void setPrev(boolean prev) {
+		this.prev = prev;
 	}
 
 	public int getRowPage() {

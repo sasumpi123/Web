@@ -20,18 +20,17 @@
 </head>
 
 <%
-	int Page = Integer.parseInt(request.getParameter("Page"));
-	MyDto dto = new MyDto();
-	MyDao dao = new MyDao();
-	paging pg = new paging();
-	pg.setPage(Page);
-	int startpage = pg.getStartPage();
-	int endpage = pg.getEndPage();
+	int Page = Integer.parseInt(request.getParameter("Page"));	// 현재 페이지
+	MyDao dao = new MyDao();						
+	paging pg = new paging();									// paging객체
+	pg.setPage(Page);											// 현재 페이지 설정
+	int startpage = (((Page - 1) / pg.getColPage()) * 10) + 1;	// paging 시작기준 잡아줌
+	int endpage = startpage + pg.getColPage() - 1;				// paging 끝기준 잡아줌
 
-	int end = Page * pg.getColPage();
-	int start = end - pg.getColPage();
-	int totalPage = (dao.selectList().size())/pg.getColPage();
-	List<MyDto> list = dao.paging(start, end);
+	int end = Page * pg.getColPage();							// 리스트 표시되는 글들 시작
+	int start = end - pg.getColPage();							// 리스트 표시되는 글들 마지막
+	int totalpage = (dao.selectList().size()) / pg.getColPage();// 전체 페이지 수 구하기 
+	List<MyDto> list = dao.paging(start, end);					// 해당 페이지의 글들만 가져옴
 %>
 <body>
 	<section>
@@ -80,24 +79,40 @@
 		<button onclick="location.href='insert.jsp'">새글</button>
 	</section>
 	<!-- follow me template -->
-	<div class="made-with-love">
-		<%
-			
-		%>
 
+	<div class="made-with-love">
+
+
+		<a href="pagingres.jsp?Page=<%=startpage - 2%>" id="prev">prev</a>
 		<%
 			for (int i = startpage; i <= endpage; i++) {
-				if (i < totalPage) {
+				if (i < totalpage) {
 		%>
 		<a href="pagingres.jsp?Page=<%=i%>"><%=i%></a>
 		<%
 			}
 			}
 		%>
-		<a href="pagingres.jsp?Page=<%=endpage+1%>">next</a>
+		<a href="pagingres.jsp?Page=<%=endpage + 1%>" id="next">next</a>
 	</div>
 
-	<script type="text/javascript" src=""></script>
+	<script type="text/javascript"
+		src="https://code.jquery.com/jquery-3.4.1.js"></script>
+	<script type="text/javascript">
+		
+	<%if (startpage == 1) {%>						// 현재 시작 페이지가 1일때
+		$("#prev").css("display", "none");			// prev버튼 display:none
+	<%} else {%>
+		$("#prev").css("display", "");
+	<%}%>
+		
+	<%if (startpage == ((totalpage/10)*10)+1) {%>	// 현지 시작페이지가 마지막 단일때
+		$("#next").css("display", "none");			// next 버튼 display:none
+	<%} else {%>
+		$("#next").css("display", "");
+	<%}%>
+		
+	</script>
 	<script type="text/javascript">
 		function allChk(bool) {
 			var chks = document.getElementsByName("chk");

@@ -22,6 +22,8 @@
 	<%
 		String id = (String) session.getAttribute("id"); // 세션의 id값을 받아와 저장
 		int myno = Integer.parseInt(request.getParameter("myno")); // 글 번호 값을 받아와 저장
+		
+		
 		MyDao dao = new MyDao();
 		MyDto dto = dao.selectOne(myno); // 해당 번호에 맞는 글 데이터를 가져옴
 		if ((id).compareTo(dto.getMyname()) != 0) {

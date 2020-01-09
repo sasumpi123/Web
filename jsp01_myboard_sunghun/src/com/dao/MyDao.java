@@ -31,7 +31,7 @@ public class MyDao extends JDBCTemplate {
 			rs = stmt.executeQuery(sql);
 			while (rs.next()) {
 				MyDto dto = new MyDto();
-				dto.setMyno(rs.getInt(1));
+				dto.setMyno(rs.getInt(1));  
 				dto.setMyname(rs.getString("MYNAME"));
 				dto.setMytitle(rs.getString(3));
 				dto.setMycontent(rs.getString(4));
@@ -71,7 +71,7 @@ public class MyDao extends JDBCTemplate {
 			// 4. 실행 및 리턴
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(sql);
-
+  
 			while (rs.next()) {
 				dto.setMyno(rs.getInt(1));
 				dto.setMyname(rs.getString("MYNAME"));

@@ -19,6 +19,7 @@ public class MVCDaoImpl implements MVCDao {
 	public List<MVCDto> selectList() {
 		Connection con = getConnection();
 
+		
 		Statement stmt = null;
 		ResultSet rs = null;
 		List<MVCDto> list = new ArrayList<>();
@@ -72,7 +73,7 @@ public class MVCDaoImpl implements MVCDao {
 				dto.setWriter(rs.getString(2));
 				dto.setTitle(rs.getString(3));
 				dto.setContent(rs.getString(4));
-				dto.setRegdate(rs.getDate(5));
+				dto.setRegdate(rs.getDate(5)); 
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

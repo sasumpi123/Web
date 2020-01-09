@@ -16,8 +16,7 @@
 </head>
 <body>
 	<%
-	MVCDto dto = new MVCDto();	
-	dto = (MVCDto) request.getAttribute("dto");
+	MVCDto dto = (MVCDto) request.getAttribute("dto");
 	%>
 	<h1>수정</h1>
 
@@ -37,7 +36,7 @@
 			</tr>
 			<tr>
 				<td colspan="2"><input type="submit" value="수정"> <input
-					type="button" value="취소" onclick="location.href='controller.jsp?command=list'"></td>
+					type="button" value="취소" onclick="location.href='controller.jsp?command=detail&seq=<%=dto.getSeq()%>'"></td>
 			</tr>
 		</table>
 	</form>

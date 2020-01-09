@@ -118,17 +118,21 @@
 	<%
 		}
 		} else if (command.equals("update")) {
+			// 1. 받을 데이터가 있는지 확인
 			int seq = Integer.parseInt(request.getParameter("seq"));
+			// 2. db에서 가져올 데이터가 있는지 확인
 			MVCDto dto = new MVCDto();
 			dto = biz.selectOne(seq);
 			request.setAttribute("dto", dto);
+			// 3. update.jsp로 보냄
 			pageContext.forward("update.jsp"); // forward : 모든 권한을 넘긴다
 
 		} else if (command.equals("updateres")) {
+			// 1. 받을 데이터가 있는지 확인
 			int seq = Integer.parseInt(request.getParameter("seq"));
 			String title = request.getParameter("title");
 			String content = request.getParameter("content");
-			
+			// 2.db로 데이터 보내주고 결과 받아옴
 			MVCDto dto = new MVCDto();
 			dto.setTitle(title);
 			dto.setContent(content);

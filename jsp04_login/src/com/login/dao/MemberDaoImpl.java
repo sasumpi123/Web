@@ -62,7 +62,6 @@ public class MemberDaoImpl implements MemberDao {
 			rs = pstm.executeQuery();
 
 			while (rs.next()) {
-
 				MemberDto dto = new MemberDto(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4),
 						rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9));
 				list.add(dto);
@@ -105,7 +104,6 @@ public class MemberDaoImpl implements MemberDao {
 			close(con);
 			System.out.println("5. DB 종료");
 		}
-		
 		return res;
 	}
 
@@ -116,14 +114,13 @@ public class MemberDaoImpl implements MemberDao {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		MemberDto dto = null;
-		String sql = " SELECT * FROM MYMEMBER WHERE MYID = ? AND MYPW = ? AND MYENABLED = ?";
+		String sql = " SELECT * FROM MYMEMBER WHERE MYID = ? AND MYPW = ? ";
 
 		try {
 			pstm = con.prepareStatement(sql);
 
 			pstm.setString(1, myid);
 			pstm.setString(2, mypw);
-			pstm.setString(3, "Y");
 			System.out.println("3. 쿼리준비");
 
 			rs = pstm.executeQuery();
@@ -159,7 +156,34 @@ public class MemberDaoImpl implements MemberDao {
 		Connection con = getConnection();
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
-		MemberDto dto = null;
+		String sql = " SELECT * FROM MYMEMBER WHERE MYID = ? ";
+		MemberDto dto = new MemberDto();
+		
+		try {
+			pstm = con.prepareStatement(sql);
+			pstm.setString(1, myid);
+			System.out.println("3. 계정연결");
+			rs = pstm.executeQuery();
+			while(rs.next()) {
+				dto.setMyno(rs.getInt(1));
+				dto.setMyid(rs.getString(2));
+				dto.setMypw(rs.getString(3));
+				dto.setMyname(rs.getString(4));
+				dto.setMyaddr(rs.getString(5));
+				dto.setMyphone(rs.getString(6));
+				dto.setMyemail(rs.getString(7));
+				dto.setMyenabled(rs.getString(8));
+				dto.setMyrole(rs.getString(9));
+			}
+			System.out.println("4. 실행 및 결과리턴");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstm);
+			close(con);
+		}
 		return dto;
 	}
 
@@ -169,6 +193,26 @@ public class MemberDaoImpl implements MemberDao {
 		Connection con = getConnection();
 		PreparedStatement pstm = null;
 		int res=0;
+		String sql = " INSERT INTO MYMEMBER VALUES (MYMEMBERSEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, 'Y', 'USER') ";
+		
+		try {
+			pstm = con.prepareStatement(sql);
+			System.out.println(pstm);
+			pstm.setString(1, dto.getMyid());
+			pstm.setString(2, dto.getMypw());
+			pstm.setString(3, dto.getMyname());
+			pstm.setString(4, dto.getMyaddr());
+			pstm.setString(5, dto.getMyphone());
+			pstm.setString(6, dto.getMyemail());
+			
+			System.out.println("3. 쿼리준비");
+			res = pstm.executeUpdate();
+			con.commit();
+			System.out.println("4. 실행 및 결과리턴 : "+res);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return res;
 	}
 
@@ -207,6 +251,29 @@ public class MemberDaoImpl implements MemberDao {
 		Connection con = getConnection();
 		PreparedStatement pstm = null;
 		int res=0;
+		String sql = " UPDATE MYMEMBER SET MYPW = ?, MYADDR = ?, MYPHONE = ?, MYEMAIL = ? WHERE MYNO = ? ";
+		
+		try {
+			pstm = con.prepareStatement(sql);
+			pstm.setString(1, dto.getMypw());
+			pstm.setString(2, dto.getMyaddr());
+			pstm.setString(3, dto.getMyphone());
+			pstm.setString(4, dto.getMyemail());
+			pstm.setInt(5, dto.getMyno());
+			System.out.println("3. 쿼리문 준비");
+			res = pstm.executeUpdate();
+			System.out.println("4. 실행 및 결과리턴");
+			con.commit();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstm);
+			close(con);
+		}	
+		System.out.println("5. DB 종료");
+		
 		return res;
 	}
 
@@ -215,7 +282,27 @@ public class MemberDaoImpl implements MemberDao {
 		// TODO Auto-generated method stub
 		Connection con = getConnection();
 		PreparedStatement pstm = null;
+		String sql = " UPDATE MYMEMBER SET MYENABLED = ? WHERE MYNO = ? ";
 		int res =0;
+		
+		try {
+			pstm = con.prepareStatement(sql);
+			pstm.setString(1, "N");
+			pstm.setInt(2, myno);
+			System.out.println("3. 쿼리문 준비");
+			res = pstm.executeUpdate();
+			con.commit();
+			System.out.println("4. 실행 및 결과리턴");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstm);
+			close(con);
+			System.out.println("5. DB 종료");
+		}
+		
+		
 		return res;
 	}
 

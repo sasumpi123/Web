@@ -25,7 +25,7 @@
 %>
 <body>
 
-	<h1>회원정보 조회(Enabled)</h1>
+	<h1>내정보 조회</h1>
 
 	<table border="1">
 		<tr>

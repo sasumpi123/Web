@@ -44,7 +44,7 @@ public class ScopeController extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		/*
 		   out.println("<h1>response</h1>"); out.println("<table border='2'> ");
-		   out.println("<tr><th>scope</th><th>값</th></tr>");
+		   out.println("<tr><th>scope</th><th>갑</th></tr>");
 		   out.println("<tr><th>pageId</th><th>null</th></tr>");
 		   out.println("<tr><th>requestId</th><th>"+requestId+"</th></tr>");
 		   out.println("<tr><th>sessionId</th><th>"+sessionId+"</th></tr>");

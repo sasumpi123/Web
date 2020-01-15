@@ -58,12 +58,12 @@ public class MyDao extends JDBCTemplate {
 		// 3. Query 준비
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
-		String sql = "SELECT * FROM (SELECT ROWNUM as row_num, myboard.* FROM MYBOARD)" + 
-				"WHERE row_num>=? AND row_num <= ?";
+		String sql = " SELECT * FROM (SELECT ROWNUM as row_num, myboard.* FROM MYBOARD) " + 
+				"WHERE row_num>=? AND row_num <= ?" ;
 		List<MyDto> list = new ArrayList<MyDto>();
 
 		try {
-			pstm = con.prepareStatement(sql);
+			pstm = con.prepareStatement(sql);                          
 			System.out.println("3. Query 준비");
 
 			pstm.setInt(1, startNum);

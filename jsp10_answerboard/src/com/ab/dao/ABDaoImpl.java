@@ -98,13 +98,14 @@ public class ABDaoImpl implements ABDao {
 		Connection con = getConnection();
 		PreparedStatement pstm = null;
 		int res = 0;
-		String sql = " insert into answerboard values(boardnoseq.nextval, groupnoseq.nextval,1,0,?,?,?,sysdate)";
+		String sql = " insert into answerboard values(boardnoseq.nextval, groupnoseq.nextval,1,0,?,?,?,sysdate,?)";
 
 		try {
 			pstm = con.prepareStatement(sql);
 			pstm.setString(1, dto.getTitle());
 			pstm.setString(2, dto.getContent());
 			pstm.setString(3, dto.getWriter());
+			pstm.setString(4, "Y");
 
 			System.out.println("쿼리문 준비" + sql);
 			res = pstm.executeUpdate();
@@ -147,8 +148,7 @@ public class ABDaoImpl implements ABDao {
 			sql = " insert into answerboard " + "values( " + "boardnoseq.nextval, "
 					+ "(select groupno from answerboard where boardno = ?), "
 					+ "(select groupseq from answerboard where boardno = ?)+1, "
-					+ "(select titletab from answerboard where boardno = ?)+1, " + "?, " + "?, " + "?, " + "sysdate "
-					+ ")";
+					+ "(select titletab from answerboard where boardno = ?)+1, ?, ?, ?, sysdate, ?) ";
 			try {
 				pstm = con.prepareStatement(sql);
 				System.out.println("댓글 insert 쿼리문 준비");
@@ -158,6 +158,7 @@ public class ABDaoImpl implements ABDao {
 				pstm.setString(4, "RE:" + dto.getTitle());
 				pstm.setString(5, dto.getContent());
 				pstm.setString(6, dto.getWriter());
+				pstm.setString(7, "Y");
 				res = pstm.executeUpdate();
 				System.out.println("실행 및 결과 리턴");
 				commit(con);
@@ -176,7 +177,7 @@ public class ABDaoImpl implements ABDao {
 		Connection con = getConnection();
 		Statement stmt = null;
 		int res = 0;
-		String sql = " update answerboard set title = '삭제된 글입니다', content = '삭제된 글입니다', deletecheck = 'N' where boardno ="
+		String sql = " update answerboard set title = '---삭제된 글입니다---', content = '---삭제된 글입니다---', deletecheck = 'N' where boardno ="
 				+ boardno;
 		// 삭제할 글의 번호를 받아와 해당 글의 제목과 내용을 삭제된 글입니다로 변경해주고 deletecheck 값을 'N'으로 변경한다
 		// 접근하는 링크는 mylist페이지 에서 deletecheck 값으로 판별한다

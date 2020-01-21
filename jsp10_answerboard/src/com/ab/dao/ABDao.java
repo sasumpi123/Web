@@ -12,11 +12,12 @@ public interface ABDao {
 
 	public int update(ABDto dto);
 
-	
-
 	public int insert(ABDto dto);
 	
 	public int insertAnswer(ABDto dto, int boardno);
 	
-	public boolean delete(int groupno, int groupseq, int titletab);
+	public boolean deleteSecond(int groupno, int groupseq, int titletab);
+	
+	public int deleteFirst(int boardno);
+	public int deleteThird(int boardno, int groupno, int groupseq);
 }

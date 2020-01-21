@@ -29,13 +29,16 @@
 			<td><textarea rows="6" cols="60" readonly="readonly">${dto.content }</textarea></td>
 		</tr>
 		<tr>
-			<td colspan="2">
-				<input type="button" value="수정" onclick="location.href='myupdate?boardno=${dto.boardno}'">
-				<input type="button" value="삭제" onclick="location.href='mydelete?boardno=${dto.boardno}'">
-				<input type="button" value="목록" onclick="location.href='mylist'">
-				<input type="button" value="답글" onclick="location.href='insertanswer?boardno=${dto.boardno}'">
+			<td colspan="2"><input type="button" value="수정"
+				onclick="location.href='myupdate?boardno=${dto.boardno}'"> <input
+				type="button" value="목록" onclick="location.href='mylist'"> <input
+				type="button" value="답글"
+				onclick="location.href='insertanswer?boardno=${dto.boardno}'">
 			</td>
 		</tr>
 	</table>
+	<input type="button" value="삭제(첫번째 방법)" onclick="location.href='mydeletefirst?boardno=${dto.boardno}'">
+			<input type="button" value="삭제(두번째 방법)" onclick="location.href='mydeletesecond?boardno=${dto.boardno}'">
+			<input type="button" value="삭제(세번째 방법)" onclick="location.href='mydeletethird?boardno=${dto.boardno}'">
 </body>
 </html>

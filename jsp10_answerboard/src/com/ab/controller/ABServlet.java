@@ -15,9 +15,8 @@ import com.ab.biz.ABBiz;
 import com.ab.biz.ABBizImpl;
 import com.ab.dto.ABDto;
 
-
 @WebServlet(urlPatterns = { "/mylist", "/mydetail", "/myinsert", "/myinsertres", "/myupdate", "/myupdateres",
-		"/mydelete", "/insertanswer","/insertanswerres" })
+		"/insertanswer", "/insertanswerres", "/mydeletefirst", "/mydeletesecond", "/mydeletethird" })
 public class ABServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -33,7 +32,7 @@ public class ABServlet extends HttpServlet {
 
 		if (command.endsWith("mylist")) {
 			doMyList(request, response);
-		}else if (command.endsWith("mydetail")) {
+		} else if (command.endsWith("mydetail")) {
 			doMyDetail(request, response);
 		} else if (command.endsWith("myinsert")) {
 			doMyInsert(request, response);
@@ -42,28 +41,55 @@ public class ABServlet extends HttpServlet {
 		} else if (command.endsWith("myupdate")) {
 			doMyUpdate(request, response);
 		} else if (command.endsWith("myupdateres")) {
-			doMyUpdateRes(request,response);
-		} else if(command.endsWith("insertanswer")) {
-			doInsertAnswer(request,response);
-		}else if(command.endsWith("insertanswerres")) {
-			doInsertAnswerRes(request,response);
-		}else if(command.endsWith("mydelete")) {
-			doMyDelete(request, response);
+			doMyUpdateRes(request, response);
+		} else if (command.endsWith("insertanswer")) {
+			doInsertAnswer(request, response);
+		} else if (command.endsWith("insertanswerres")) {
+			doInsertAnswerRes(request, response);
+		} else if (command.endsWith("mydeletefirst")) {
+			doMyDeleteFirst(request, response);
+		} else if (command.endsWith("mydeletesecond")) {
+			doMyDeleteSecond(request, response);
+		} else if (command.endsWith("mydeletethird")) {
+			doMyDeleteThird(request, response);
+		}
+
+	}
+
+	private void doMyDeleteThird(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		int boardno = Integer.parseInt(request.getParameter("boardno"));
+		ABDto dto = biz.selectOne(boardno);
+		int res = biz.deleteThird(boardno, dto.getGroupno(), dto.getGroupseq());
+		if (res>0) {
+			jsResponse("글 삭제 완료", "mylist", response);
+		} else {
+			jsResponse("글 삭제 실패", "mydetail?boardno=" + boardno, response);
 		}
 	}
 
-	private void doMyDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	private void doMyDeleteFirst(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		int boardno = Integer.parseInt(request.getParameter("boardno"));
+		int res = biz.deleteFirst(boardno);
+		if (res>0) {
+			jsResponse("글 삭제 완료", "mylist", response);
+		} else {
+			jsResponse("글 삭제 실패", "mydetail?boardno=" + boardno, response);
+		}
+
+	}
+
+	private void doMyDeleteSecond(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		int boardno = Integer.parseInt(request.getParameter("boardno"));
 		ABDto dto = new ABDto();
 		dto = biz.selectOne(boardno);
 		int groupno = dto.getGroupno();
 		int groupseq = dto.getGroupseq();
 		int titletab = dto.getTitletab();
-		boolean res = biz.delete(groupno, groupseq, titletab);
+		boolean res = biz.deleteSecond(groupno, groupseq, titletab);
 		if (res == true) {
 			jsResponse("글 삭제 완료", "mylist", response);
 		} else {
-			jsResponse("글 삭제 실패", "myupdate?boardno="+boardno, response);
+			jsResponse("글 삭제 실패", "mydetail?boardno=" + boardno, response);
 		}
 	}
 
@@ -76,20 +102,20 @@ public class ABServlet extends HttpServlet {
 		dto.setTitle(title);
 		dto.setContent(content);
 		dto.setWriter(writer);
-		
+
 		int res = biz.insertAnswer(dto, boardno);
 		if (res > 0) {
 			jsResponse("답글 작성 완료", "mylist", response);
 		} else {
 			jsResponse("답글 작성 실패", "myinsert", response);
 		}
-		
+
 	}
 
-	private void doInsertAnswer(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+	private void doInsertAnswer(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
 		int boardno = Integer.parseInt(request.getParameter("boardno"));
-		ABDto dto = new ABDto();
-		dto.setBoardno(boardno);
+		ABDto dto = biz.selectOne(boardno);
 		request.setAttribute("dto", dto);
 		dispatch("insertanswer.jsp", request, response);
 	}
@@ -104,18 +130,19 @@ public class ABServlet extends HttpServlet {
 		dto.setContent(content);
 		int res = biz.update(dto);
 		if (res > 0) {
-			jsResponse("글 수정 완료", "mydetail?boardno="+boardno, response);
+			jsResponse("글 수정 완료", "mydetail?boardno=" + boardno, response);
 		} else {
-			jsResponse("글 수정 실패", "myupdate?boardno="+boardno, response);
-		}	
+			jsResponse("글 수정 실패", "myupdate?boardno=" + boardno, response);
+		}
 	}
 
-	private void doMyUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void doMyUpdate(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		int boardno = Integer.parseInt(request.getParameter("boardno"));
 		ABDto dto = biz.selectOne(boardno);
 		request.setAttribute("dto", dto);
 		dispatch("myupdate.jsp", request, response);
-		
+
 	}
 
 	private void doMyInsertRes(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -126,7 +153,7 @@ public class ABServlet extends HttpServlet {
 		dto.setTitle(title);
 		dto.setContent(content);
 		dto.setWriter(writer);
-		
+
 		int res = biz.insert(dto);
 		if (res > 0) {
 			jsResponse("글 작성 완료", "mylist", response);
@@ -139,12 +166,13 @@ public class ABServlet extends HttpServlet {
 		response.sendRedirect("myinsert.jsp");
 	}
 
-	private void doMyDetail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void doMyDetail(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		int boardno = Integer.parseInt(request.getParameter("boardno"));
 		ABDto dto = biz.selectOne(boardno);
 		request.setAttribute("dto", dto);
-		dispatch("mydetail.jsp",request,response);
-		
+		dispatch("mydetail.jsp", request, response);
+
 	}
 
 	// 글 전체

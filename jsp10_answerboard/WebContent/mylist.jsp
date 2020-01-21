@@ -41,24 +41,28 @@
 						<td>${dto.groupno }</td>
 						<td>${dto.groupseq }</a></td>
 						<td>${dto.titletab}</td>
-						<td>
-						<c:forEach begin="1" end="${dto.titletab}">
+						<td><c:forEach begin="1" end="${dto.titletab}">
 							&nbsp;&nbsp;
-						</c:forEach>
-						<c:if test=""></c:if>
-						<a href="mydetail?boardno=${dto.boardno}">${dto.title}</a>
-						</td>
+						</c:forEach> <c:choose>
+								<c:when test="${dto.deletecheck eq 'N'}">
+									<c:out value="${dto.title }"></c:out>
+								</c:when>
+								<c:otherwise>
+									<a href="mydetail?boardno=${dto.boardno}">${dto.title}</a>
+								</c:otherwise>
+							</c:choose></td>
 						<td>${dto.content}</td>
 						<td>${dto.writer}</td>
 						<td>${dto.regdate}</td>
-						<td><input type="button" value="답글" onclick="location.href='insertanswer?boardno=${dto.boardno}'"></td>
+						<td><input type="button" value="답글"
+							onclick="location.href='insertanswer?boardno=${dto.boardno}'"></td>
 					</tr>
 				</c:forEach>
 			</c:otherwise>
 		</c:choose>
 		<tr>
-			<td colspan="9"><input type="button" value="글쓰기" onclick="location.href='myinsert'">
-			</td>
+			<td colspan="9"><input type="button" value="글쓰기"
+				onclick="location.href='myinsert'"></td>
 		</tr>
 	</table>
 </body>

@@ -19,6 +19,7 @@ public class ABDto {
 	private String content;
 	private String writer;
 	private Date regdate;
+	private String deletecheck;
 	
 	public ABDto() {
 		
@@ -88,8 +89,16 @@ public class ABDto {
 		this.regdate = regdate;
 	}
 
+	public String getDeletecheck() {
+		return deletecheck;
+	}
+
+	public void setDeletecheck(String deletecheck) {
+		this.deletecheck = deletecheck;
+	}
+
 	public ABDto(int boardno, int groupno, int groupseq, int titletab, String title, String content, String writer,
-			Date regdate) {
+			Date regdate, String deletecheck) {
 		super();
 		this.boardno = boardno;
 		this.groupno = groupno;
@@ -99,6 +108,9 @@ public class ABDto {
 		this.content = content;
 		this.writer = writer;
 		this.regdate = regdate;
+		this.deletecheck = deletecheck;
 	}
+
+	
 
 }

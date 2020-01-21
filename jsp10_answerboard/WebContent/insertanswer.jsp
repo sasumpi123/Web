@@ -23,7 +23,7 @@
 			</tr>
 			<tr>
 				<th>제목</th>
-				<td><input type="text" name="title" placeholder="제목을 작성해주세요"></td>
+				<td><input type="text" name="title" readonly="readonly" value="${dto.title }"></td>
 			</tr>
 			<tr>
 				<td colspan="2"><textarea rows="6" cols="60" name="content"

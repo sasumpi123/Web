@@ -23,7 +23,11 @@ create table answerboard(
 );
 
 select * from answerboard order by boardno desc, groupseq;
-
+ SELECT TITLETAB,groupseq FROM ANSWERBOARD WHERE GROUPNO = 1 AND GROUPSEQ > 1 ORDER BY groupseq asc;
+ SELECT TITLETAB,groupseq FROM ANSWERBOARD WHERE GROUPNO = 1 AND GROUPSEQ >= 1 ORDER BY groupseq asc;
+ 
+ SELECT TITLETAB,groupseq,groupno FROM ANSWERBOARD WHERE  groupno = 11 and GROUPSEQ > 2 ORDER BY groupno,groupseq asc; 
+ 
 -- 글번호, 그룹번호, 그룹순서, 제목탭, 제목, 작성자
 -- 3, 3, 1, 0, qclass 파이팅, 반장
 -- 2, 2, 1, 0, 이거살아있나?, 이동헌
@@ -50,6 +54,9 @@ set groupseq = groupseq+1
 where groupno = (select groupno from answerboard where boardno = 1)
 and groupseq > (select groupseq from answerboard where boardno = 1);
 
+update answerboard set groupseq = groupseq-1 WHERE groupno = 10 and groupseq > 2;
+
+alter table answerboard add deletecheck varchar2(1) default 'Y';
 
 insert into answerboard
 values(

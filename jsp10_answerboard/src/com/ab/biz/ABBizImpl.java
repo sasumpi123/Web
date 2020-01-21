@@ -41,9 +41,23 @@ public class ABBizImpl implements ABBiz {
 	}
 
 	@Override
-	public boolean delete(int groupno, int groupseq, int titletab) {
+	public boolean deleteSecond(int groupno, int groupseq, int titletab) {
 		// TODO Auto-generated method stub
-		return dao.delete(groupno, groupseq, titletab);
+		return dao.deleteSecond(groupno, groupseq, titletab);
 	}
+
+	@Override
+	public int deleteFirst(int boardno) {
+		// TODO Auto-generated method stub
+		return dao.deleteFirst(boardno);
+	}
+
+	@Override
+	public int deleteThird(int boardno, int groupno, int groupseq) {
+		// TODO Auto-generated method stub
+		return dao.deleteThird(boardno, groupno, groupseq);
+	}
+
+	
 
 }

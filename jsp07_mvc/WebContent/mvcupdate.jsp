@@ -16,7 +16,7 @@
 </head>
 <body>
 	<%
-	MVCDto dto = (MVCDto) request.getAttribute("dto");
+		MVCDto dto = (MVCDto) request.getAttribute("dto");
 	%>
 	<h1>수정</h1>
 

@@ -55,11 +55,30 @@ public class MyServlet extends HttpServlet {
 			MyDto dto = biz.selectOne(myno);
 			request.setAttribute("dto", dto);
 			dispatch("mydetail.jsp", request, response);
-		}else if (command.equals("update")) {
+		} else if (command.equals("update")) {
 			int myno = Integer.parseInt(request.getParameter("myno"));
 			MyDto dto = biz.selectOne(myno);
 			request.setAttribute("dto", dto);
 			dispatch("myupdate.jsp", request, response);
+		} else if (command.equals("updateres")) {
+			MyDto dto = new MyDto();
+			dto.setMyno(Integer.parseInt(request.getParameter("myno")));
+			dto.setMytitle(request.getParameter("mytitle"));
+			dto.setMycontent(request.getParameter("mycontent"));
+			int res = biz.update(dto);
+			if (res > 0) {
+				jsResponse("수정 성공", "con.do?command=detail&myno=" + dto.getMyno(), response);
+			} else {
+				jsResponse("수정 실패", "con.do?command=update&myno=" + dto.getMyno(), response);
+			}
+		} else if (command.equals("delete")) {
+			int myno = Integer.parseInt(request.getParameter("myno"));
+			int res = biz.delete(myno);
+			if (res > 0) {
+				jsResponse("삭제 성공", "con.do?command=list", response);
+			} else {
+				jsResponse("삭제 실패", "con.do?command=mydetail&myno="+myno, response);
+			}
 		}
 
 		response.getWriter().append("<h1><a href='con.do?command=list'>응 아니야</h1>");
@@ -75,7 +94,7 @@ public class MyServlet extends HttpServlet {
 
 	private void jsResponse(String msg, String url, HttpServletResponse response) throws IOException {
 		PrintWriter out = response.getWriter();
-		out.println("<script type='text/javascript'>");
+		out.println("<script type='text/javascript>");
 		out.println("alert('" + msg + "')");
 		out.println("location.href='" + url + "'");
 		out.println("</script>");

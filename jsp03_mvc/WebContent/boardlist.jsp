@@ -18,8 +18,8 @@
 <body>
 	<%
 		// request, response 모두 Object형태
-		// 따라서 list 형태로 casting 필요
-		List<MVCDto> list = (List<MVCDto>) request.getAttribute("list");
+			// 따라서 list 형태로 casting 필요
+			List<MVCDto> list = (List<MVCDto>) request.getAttribute("list");
 	%>
 
 	<h1>글 목록</h1>
@@ -48,7 +48,7 @@
 			</tr>
 			<%
 				} else {
-					for (MVCDto dto : list) {
+						for (MVCDto dto : list) {
 			%>
 			<tr>
 				<td><input type="checkbox" name="chk" value="<%=dto.getSeq()%>"></td>

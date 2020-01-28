@@ -5,8 +5,8 @@ import java.util.Date;
 public class MyDto {
 
 	private int myno;
-	private String mytitle;
 	private String mywriter;
+	private String mytitle;
 	private String mycontent;
 	private Date mydate;
 
@@ -53,7 +53,7 @@ public class MyDto {
 		this.mydate = mydate;
 	}
 
-	public MyDto(int myno, String mytitle, String mywriter, String mycontent, Date mydate) {
+	public MyDto(int myno, String mywriter, String mytitle, String mycontent, Date mydate) {
 		super();
 		this.myno = myno;
 		this.mytitle = mytitle;

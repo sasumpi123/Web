@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%
 	request.setCharacterEncoding("UTF-8");
@@ -14,30 +15,30 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-	<jsp:useBean id="dto" class="com.mvc.mydto.MyDto" scope="request"></jsp:useBean>
-
-	<h1>글 수정</h1>
-	<table border="1">
-		<tr>
-			<th>작성자</th>
-			<td><jsp:getProperty property="mywriter" name="dto" /></td>
-		</tr>
-		<tr>
-			<th>제목</th>
-			<td><input type="text" name="mytitle" value="<jsp:getProperty property="mytitle" name="dto" />"></td>
-		</tr>
-		<tr>
-			<th>내용</th>
-			<td><textarea rows="6" cols="60" name="mycontent"><jsp:getProperty
-						property="mycontent" name="dto" /></textarea></td>
-		</tr>
-		<tr>
-			<td colspan="2">
-				<input type="button" value="수정" onclick="">
-				<input type="button" value="취소" onclick="location.href='con.do?command=detail&myno=${dto.myno}'">
-			</td>
-		</tr>
-	</table>
+	<form action="con.do" method="post">
+		<input type="hidden" name="command" value="updateres"> <input
+			type="hidden" name="myno" value="${dto.myno }">
+		<h1>글 수정</h1>
+		<table border="1">
+			<tr>
+				<th>작성자</th>
+				<td>${dto.mywriter }</td>
+			</tr>
+			<tr>
+				<th>제목</th>
+				<td><input type="text" name="mytitle" value="${dto.mytitle }"></td>
+			</tr>
+			<tr>
+				<th>내용</th>
+				<td><textarea rows="6" cols="60" name="mycontent">${dto.mycontent }</textarea></td>
+			</tr>
+			<tr>
+				<td colspan="2"><input type="submit" value="수정"> <input
+					type="button" value="취소"
+					onclick="location.href='con.do?command=detail&myno=${dto.myno}'">
+				</td>
+			</tr>
+		</table>
+	</form>
 </body>
 </html>

@@ -14,7 +14,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<jsp:useBean id="dto" class="com.mvc.mydto.MyDto" scope="request"></jsp:useBean>
+	
 	<form action="con.do" method="post">
 	<input type="hidden" name="command" value="insertres">
 		<table border="1">

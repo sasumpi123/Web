@@ -18,7 +18,7 @@
 <body>
 	<%
 		// request, response 모두 Object형태
-		MVCDto dto = (MVCDto) request.getAttribute("dto");
+			MVCDto dto = (MVCDto) request.getAttribute("dto");
 	%>
 
 	<h1></h1>

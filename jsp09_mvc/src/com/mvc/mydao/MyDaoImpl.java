@@ -19,7 +19,7 @@ public class MyDaoImpl implements MyDao {
 		Connection con = getConnection();
 		Statement stmt = null;
 		ResultSet rs = null;
-		String sql = " SELECT * FROM MVCBOARD ";
+		String sql = " SELECT MYNO, MYWRITER, MYTITLE, MYCONTENT, MYDATE FROM MVCBOARD ";
 		List<MyDto> list = new ArrayList<>();
 
 		try {

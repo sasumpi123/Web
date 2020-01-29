@@ -1,3 +1,8 @@
+<%@page import="java.util.List"%>
+<%@page import="com.cal.dao.CalDao"%>
+<%@page import="com.cal.dao.CalDaoImpl"%>
+<%@page import="com.cal.dao.Util"%>
+<%@page import="com.cal.dto.CalDto"%>
 <%@page import="java.util.Calendar"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -33,7 +38,60 @@
 #head{
 background-color: skyblue;
 }
+a{
+text-decoration: none;
+}
+.clist>p{
+	font-size: 5px;
+	margin: 1px;
+	background-color: yellow;
+}
+.cpreview{
+	position: absolute;
+	top: -30px;
+	left: 10px;
+	background-color: skyblue;
+	width: 40px;
+	height: 40px;
+	text-align: center;
+	line-height: 40px;
+	border-radius: 40px 40px 40px 1px;
+}
 </style>
+<script type="text/javascript" src="//code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+function isTwo(n){
+	return (n.length==1)?"0"+n:n;
+}
+$(function(){
+	$(".countview").hover(function(){
+		var aCountView = $(this);
+		var year = $(".y").text().trim();
+		var month = $(".m").text().trim();
+		var cDate = aCountView.text().trim();
+		var yyyyMMdd = year + isTwo(month) + isTwo(cDate);
+		//alert(yyyyMMdd);
+		
+		$.ajax({
+			type:"POST",						// 전송 방식
+			url:"calcountajax.do",				// 요청 경로
+			data:"id=kh&yyyymmdd="+yyyyMMdd,	// 전송 파라미터
+			dataType:"json",					// 받는 데이터 타입
+			async:false,						// 동기 (async:true - 비동기)
+			success:function(msg){				
+				var count = msg.count;
+				aCountView.after("<div class='cpreview'>"+count+"</div>");
+			},
+			error:function(){
+				alert("서버 통신 실패");
+			}
+		})
+	},function(){
+		$(".cpreview").remove();
+	});
+});
+
+</script>
 </head>
 <%
 	// Calendar는 싱글톤으로 만들어져있기때문에 new객체로 생성할 수 없다.
@@ -67,9 +125,12 @@ background-color: skyblue;
 	
 	// 현재 월의 마지막 일
 	int lastDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+	CalDto dto = new CalDto();
 	
 	// 달력에 일정 표현
-	
+	CalDao dao = new CalDaoImpl();
+	String yyyyMM = year + Util.isTwo(String.valueOf(month));
+	List<CalDto> clist = dao.getCalViewList("kh", yyyyMM);
 	
 %>
 <body>
@@ -98,11 +159,14 @@ background-color: skyblue;
 			// 달력 날짜
 			for(int i=1; i<=lastDay; i++){
 				%>
-				<td><a href="insertcalboard.jsp?year=<%=year%>&month=<%=month%>&date=<%=i%>&lastday=<%=lastDay%>"><%=i %> </a>
-					<a>
+				<td>
+					<a class="countview" href="calendar.do?command=list&year=<%=year%>&month=<%=month%>&date=<%=i%>" style="color: <%=Util.fontColor(i, dayOfWeek)%>"><%=i %></a>
+					<a href="insertcalboard.jsp?year=<%=year%>&month=<%=month%>&date=<%=i%>&lastday=<%=lastDay%>">
 						<img alt="일정추가" src="img/pen.png" style="width: 10px; height: 10px">
 					</a>
-					<a href="calboarddetail.jsp"></a>
+					<div class="clist">
+						<%=Util.getCalView(i, clist) %>
+					</div>
 				</td>
 				<%
 				if((i+dayOfWeek-1)%7==0){

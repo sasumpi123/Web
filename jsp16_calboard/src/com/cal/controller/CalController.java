@@ -1,6 +1,10 @@
 package com.cal.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,6 +27,7 @@ public class CalController extends HttpServlet {
 
 		String command = request.getParameter("command");
 		System.out.println("command = " + command);
+		CalDao dao = new CalDaoImpl();
 
 		if (command.equals("calendar")) {
 			response.sendRedirect("calendar.jsp");
@@ -39,16 +44,23 @@ public class CalController extends HttpServlet {
 			String content = request.getParameter("content");
 			
 			CalDto dto = new CalDto(0,id,title,content,mDate,null);
-			CalDao dao = new CalDaoImpl();
+			
 			int res = dao.insertCalBoard(dto);
 			if(res>0) {
-				System.out.println("성공");
-				response.sendRedirect("calendar.jsp");
+				jsResponse("일정 작성 성공", "calendar.do?command=calendar", response);
 			}else {
-				System.out.println("실패");
+				request.setAttribute("msg", "일정 등록 실패");
+				dispatch("error.jsp",request,response);
 			}
+		}else if(command.equals("list")) {
+			String year = request.getParameter("year");
+			String month = Util.isTwo(request.getParameter("month"));
+			String date = Util.isTwo(request.getParameter("date"));
+			String yyyyMMdd = year + month + date;
 			
-			
+			List<CalDto> list = dao.selectCalList("kh", yyyyMMdd);
+			request.setAttribute("list", list);
+			dispatch("calendarlist.jsp", request, response);
 		}
 	}
 
@@ -57,6 +69,18 @@ public class CalController extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 		doGet(request, response);
+	}
+	private void jsResponse(String msg, String url, HttpServletResponse response) throws IOException {
+		PrintWriter out = response.getWriter();
+		out.println("<script type='text/javascript'>");
+		out.println("alert('" + msg + "')");
+		out.println("location.href='" + url + "'");
+		out.println("</script>");
+	}
+	private void dispatch(String url, HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		RequestDispatcher dispatch = request.getRequestDispatcher(url);
+		dispatch.forward(request, response);
 	}
 
 }

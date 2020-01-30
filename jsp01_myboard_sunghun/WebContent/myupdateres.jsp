@@ -1,6 +1,6 @@
 <%@page import="javax.websocket.Session"%>
-<%@page import="com.dao.MyDao"%>
-<%@page import="com.dto.MyDto"%>
+<%@page import="com.my.dao.MyDao"%>
+<%@page import="com.my.dto.MyDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 

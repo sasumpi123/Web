@@ -1,4 +1,4 @@
-package com.dao;
+package com.my.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,8 +8,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.db.JDBCTemplate;
-import com.dto.MyDto;
+import com.my.db.JDBCTemplate;
+import com.my.dto.MyDto;
 
 public class MyDao extends JDBCTemplate {
 

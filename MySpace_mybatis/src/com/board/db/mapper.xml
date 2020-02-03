@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="board">
+
+	
+	
+	<select id="selectOne" parameterType="int" resultType="BoardDto">
+		SELECT * FROM BOARD WHERE SEQ = ${seq}
+	</select>
+	
+	<insert id="insert" parameterType="BoardDto">
+		INSERT INTO BOARD VALUES(BOARDSEQ.NEXTVAL, #{writer}, #{title}, #{content}, SYSDATE, REPLYSEQ.NEXTVAL, 1, 0, N );
+	</insert>
+	
+	<update id="update" parameterType="BoardDto">
+		UPDATE BOARD SET TITLE = #{title}, CONTENT = #{content} WHERE SEQ = ${seq}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM BOARD WHERE SEQ = ${seq}
+	</delete>
+	
+</mapper>
+

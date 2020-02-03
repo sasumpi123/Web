@@ -26,13 +26,13 @@
 		if(res>0){
 	%>
 	<script type="text/javascript">
-	alert=("삭제성공");
+		alert=("삭제성공");
 	</script>
 	<%
 	}else{
 	%>
 	<script type="text/javascript">
-	alert=("삭제실패");
+		alert=("삭제실패");
 	</script>
 	<%	
 		}

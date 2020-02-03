@@ -12,16 +12,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript">
-function registForm(){
-	location.href = "logincontroller.jsp?command=registform";
-}
 
-</script>
 </head>
 <body>
 
-	<form action="logincontroller.jsp" method="post">
+	<form action="member" method="post">
 		<input type="hidden" name="command" value="login">
 		<table border="1">
 			<col width="100">
@@ -36,12 +31,12 @@ function registForm(){
 			</tr>
 			<tr>
 				<td colspan="2">
-					<input type="submit" value="login"> 
-					<input type="button" value="regist" onclick="registForm()">
-				</td>
+				<input type="submit" value="login"> 
+				<input type="button" value="regist" onclick="location.href='member?command=registform'"></td>
 			</tr>
 		</table>
 	</form>
-	
+
+
 </body>
 </html>

@@ -14,7 +14,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	
 	<form action="con.do" method="post">
 	<input type="hidden" name="command" value="insertres">
 		<table border="1">
